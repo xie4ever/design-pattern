@@ -7,6 +7,16 @@ import (
 )
 
 func main() {
+	rankProcessor := article.RankProcessor{
+		ID: 1,
+	}
+	pointProcessor := article.PointProcessor{
+		ID: 2,
+	}
+	obs := article.GetObs()
+	obs.AddProcessor(rankProcessor)
+	obs.AddProcessor(pointProcessor)
+
 	a := article.NewArticle("title", "content")
 	_ = a.Add()
 	time.Sleep(time.Second)

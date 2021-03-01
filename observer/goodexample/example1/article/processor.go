@@ -3,47 +3,64 @@ package article
 import "log"
 
 type processor interface {
-	entryAdded(e Event) error
-	entryDeleted(e Event) error
-	entryModified(e Event) error
+	GetID() int64
+	EntryAdded(e Event) error
+	EntryDeleted(e Event) error
+	EntryModified(e Event) error
 }
 
-type rankProcessor struct {
-	ID   int64  `json:"id"`
-	Name string `json:"name"`
+// RankProcessor ...
+type RankProcessor struct {
+	ID int64 `json:"id"`
 }
 
-func (p rankProcessor) entryAdded(e Event) error {
-	log.Printf("rankProcessor entryAdded, event id :%d", e.ID)
+// GetID ...
+func (p RankProcessor) GetID() int64 {
+	return p.ID
+}
+
+// EntryAdded ...
+func (p RankProcessor) EntryAdded(e Event) error {
+	log.Printf("rankProcessor EntryAdded, event id :%d", e.ID)
 	return nil
 }
 
-func (p rankProcessor) entryDeleted(e Event) error {
-	log.Printf("rankProcessor entryDeleted, event id :%d", e.ID)
+// EntryDeleted ...
+func (p RankProcessor) EntryDeleted(e Event) error {
+	log.Printf("rankProcessor EntryDeleted, event id :%d", e.ID)
 	return nil
 }
 
-func (p rankProcessor) entryModified(e Event) error {
-	log.Printf("rankProcessor entryModified, event id :%d", e.ID)
+// EntryModified ...
+func (p RankProcessor) EntryModified(e Event) error {
+	log.Printf("rankProcessor EntryModified, event id :%d", e.ID)
 	return nil
 }
 
-type pointProcessor struct {
-	ID   int64  `json:"id"`
-	Name string `json:"name"`
+// PointProcessor ...
+type PointProcessor struct {
+	ID int64 `json:"id"`
 }
 
-func (p pointProcessor) entryAdded(e Event) error {
-	log.Printf("pointProcessor entryAdded, event id :%d", e.ID)
+// GetID ...
+func (p PointProcessor) GetID() int64 {
+	return p.ID
+}
+
+// EntryAdded ...
+func (p PointProcessor) EntryAdded(e Event) error {
+	log.Printf("pointProcessor EntryAdded, event id :%d", e.ID)
 	return nil
 }
 
-func (p pointProcessor) entryDeleted(e Event) error {
-	log.Printf("pointProcessor entryDeleted, event id :%d", e.ID)
+// EntryDeleted ...
+func (p PointProcessor) EntryDeleted(e Event) error {
+	log.Printf("pointProcessor EntryAdded, event id :%d", e.ID)
 	return nil
 }
 
-func (p pointProcessor) entryModified(e Event) error {
-	log.Printf("pointProcessor entryModified, event id :%d", e.ID)
+// EntryModified ...
+func (p PointProcessor) EntryModified(e Event) error {
+	log.Printf("pointProcessor EntryAdded, event id :%d", e.ID)
 	return nil
 }

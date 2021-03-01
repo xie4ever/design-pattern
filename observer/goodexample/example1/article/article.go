@@ -25,7 +25,7 @@ func NewArticle(title, content string) Article {
 func (a Article) Add() error {
 	log.Print("do something")
 	event := NewEvent(TypeEventAdd, a, nil)
-	if err := obs.postEvent(event); err != nil {
+	if err := GetObs().PostEvent(event); err != nil {
 		return err
 	}
 	return nil
@@ -35,7 +35,7 @@ func (a Article) Add() error {
 func (a Article) Delete() error {
 	log.Print("do something")
 	event := NewEvent(TypeEventDelete, a, nil)
-	if err := obs.postEvent(event); err != nil {
+	if err := GetObs().PostEvent(event); err != nil {
 		return err
 	}
 	return nil
@@ -45,7 +45,7 @@ func (a Article) Delete() error {
 func (a Article) Modify() error {
 	log.Print("do something")
 	event := NewEvent(TypeEventModify, a, nil)
-	if err := obs.postEvent(event); err != nil {
+	if err := GetObs().PostEvent(event); err != nil {
 		return err
 	}
 	return nil

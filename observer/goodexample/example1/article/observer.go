@@ -11,33 +11,35 @@ type observer struct {
 	ProcessorMap sync.Map `json:"processor_map"`
 }
 
-func init() {
-	rp := rankProcessor{
-		ID:   1,
-		Name: "rankProcessor",
+// GetObs ...
+func GetObs() *observer {
+	obsMutex.Lock()
+	if obs == nil {
+		var m sync.Map
+		obs = &observer{
+			ProcessorMap: m,
+		}
 	}
-	pp := pointProcessor{
-		ID:   2,
-		Name: "pointProcessor",
-	}
-	obs = &observer{}
-	obs.ProcessorMap.Store(rp.ID, rp)
-	obs.ProcessorMap.Store(pp.ID, pp)
+	obsMutex.Unlock()
+	return obs
 }
 
-func (o *observer) addProcessor(id int64, p processor) {
+// AddProcessor ...
+func (o *observer) AddProcessor(p processor) {
 	obsMutex.Lock()
-	o.ProcessorMap.Store(id, p)
+	o.ProcessorMap.Store(p.GetID(), p)
 	obsMutex.Unlock()
 }
 
-func (o *observer) deleteProcessor(id int64) {
+// DeleteProcessor ...
+func (o *observer) DeleteProcessor(id int64) {
 	obsMutex.Lock()
 	o.ProcessorMap.Delete(id)
 	obsMutex.Unlock()
 }
 
-func (o *observer) postEvent(e Event) error {
+// PostEvent ...
+func (o *observer) PostEvent(e Event) error {
 	if e.ID == 0 {
 		return nil
 	}
@@ -46,17 +48,17 @@ func (o *observer) postEvent(e Event) error {
 		func(k, v interface{}) bool {
 			p := v.(processor)
 			if e.Type == TypeEventAdd {
-				if err := p.entryAdded(e); err != nil {
+				if err := p.EntryAdded(e); err != nil {
 					return false
 				}
 			}
 			if e.Type == TypeEventDelete {
-				if err := p.entryDeleted(e); err != nil {
+				if err := p.EntryDeleted(e); err != nil {
 					return false
 				}
 			}
 			if e.Type == TypeEventModify {
-				if err := p.entryModified(e); err != nil {
+				if err := p.EntryModified(e); err != nil {
 					return false
 				}
 			}
