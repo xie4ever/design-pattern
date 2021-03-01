@@ -17,9 +17,8 @@ type observer struct {
 func GetObs() *observer {
 	obsMutex.Lock()
 	if obs == nil {
-		var m sync.Map
 		obs = &observer{
-			ProcessorMap: m,
+			ProcessorMap: sync.Map{},
 		}
 	}
 	obsMutex.Unlock()
