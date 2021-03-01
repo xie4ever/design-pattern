@@ -8,9 +8,9 @@ import (
 
 func main() {
 	a := article.NewArticle("title", "content")
-	a.Add()
+	_ = a.Add()
 	time.Sleep(time.Second)
-	a.Modify()
+	_ = a.Modify()
 	time.Sleep(time.Second)
-	a.Delete()
+	_ = a.Delete()
 }

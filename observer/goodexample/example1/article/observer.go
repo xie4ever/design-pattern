@@ -3,7 +3,7 @@ package article
 import "sync"
 
 var (
-	obs      observer
+	obs      *observer
 	obsMutex sync.Mutex
 )
 
@@ -20,23 +20,24 @@ func init() {
 		ID:   2,
 		Name: "pointProcessor",
 	}
+	obs = &observer{}
 	obs.ProcessorMap.Store(rp.ID, rp)
 	obs.ProcessorMap.Store(pp.ID, pp)
 }
 
-func (o observer) addProcessor(id int64, p processor) {
+func (o *observer) addProcessor(id int64, p processor) {
 	obsMutex.Lock()
 	o.ProcessorMap.Store(id, p)
 	obsMutex.Unlock()
 }
 
-func (o observer) deleteProcessor(id int64) {
+func (o *observer) deleteProcessor(id int64) {
 	obsMutex.Lock()
 	o.ProcessorMap.Delete(id)
 	obsMutex.Unlock()
 }
 
-func (o observer) postEvent(e Event) error {
+func (o *observer) postEvent(e Event) error {
 	if e.ID == 0 {
 		return nil
 	}
