@@ -43,6 +43,9 @@ func (o *observer) PostEvent(e Event) error {
 	if e.ID == 0 {
 		return nil
 	}
+	if e.Type == 0 {
+		return nil
+	}
 
 	o.ProcessorMap.Range(
 		func(k, v interface{}) bool {
